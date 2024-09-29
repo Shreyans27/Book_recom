@@ -7,7 +7,7 @@ import bz2file as bz2
 import random
 
 
-book_isbn_all = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\book_isbn_all.csv',index_col=0)
+book_isbn_all = pd.read_csv('book_isbn_all.csv',index_col=0)
 print(book_isbn_all.head)
 
 
