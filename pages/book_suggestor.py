@@ -10,7 +10,7 @@ import random
 
 
 # Book_isbn_all is a dataframe which contains the book name and its unique ISBN number
-book_isbn_all = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\book_isbn_all.csv',index_col=0)
+book_isbn_all = pd.read_csv('book_isbn_all.csv',index_col=0)
 print(book_isbn_all.head)
 
 
