@@ -12,9 +12,9 @@ import bz2file as bz2
 cosine = bz2.BZ2File('cosine.pbz2', 'rb')
 cosine = pickle.load(cosine)
 
-# k_neighbor is a machine learning model using which we predict
-k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
-k_neighbor = pickle.load(k_neighbor)
+# # k_neighbor is a machine learning model using which we predict
+# k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
+# k_neighbor = pickle.load(k_neighbor)
 
 # Pivot is a data frame which contains all the book titles and the ratings given by the user
 df = pd.read_csv('pivot.csv',index_col=0)
