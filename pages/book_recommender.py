@@ -1,3 +1,5 @@
+# Import required files
+
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -6,36 +8,50 @@ import requests
 import bz2file as bz2
 
 
+# cosine is the cosine similarity array which we use to predict 
 cosine = bz2.BZ2File('cosine.pbz2', 'rb')
 cosine = pickle.load(cosine)
 
-# k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
-# k_neighbor = pickle.load(k_neighbor)
+# k_neighbor is a machine learning model using which we predict
+k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
+k_neighbor = pickle.load(k_neighbor)
 
+# Pivot is a data frame which contains all the book titles and the ratings given by the user
 df = pd.read_csv('pivot.csv',index_col=0)
 book_options = sorted(df.index.unique())
 print(df.index)
 
+# Book_isbn_all is a dataframe which contains the book title only stored in the pivot dataframe
+# and its unique ISBN number
 book_isbn = pd.read_csv('book_isbn.csv',index_col=0)
 print(book_isbn.head)
 
 
+# recommend_cosine function is used defined to predict
 def recommend_cosine(book_name):
+    # We find the index of a book using the pivot table
     index=np.where(df.index==book_name)[0][0]
     print(index)
+    
+    # The below command gives us the index and the closest distance to other books
     similar_items=sorted(list(enumerate(cosine[index])),key=lambda x:x[1],reverse=True)[1:11]
     print(similar_items)
     arr = []
+    
+    # Traverse through the array and get the book title of books to recommend
     for i in similar_items:
         book_title = df.index[i[0]]
         print(book_title)
         arr.append(book_title)
     return arr
 
-
+# # recommend_k function is used defined to predict using k nearest neighbors
 # def recommend_k(book_name):
+#     # We find the index of a book using the pivot table
 #     index=np.where(df.index==book_name)[0][0]
 #     print(index)
+    
+#     # The below command gets the cloest distance and suggestion 
 #     dist, sugg = k_neighbor.kneighbors(df.iloc[index, :].values.reshape(1,-1),n_neighbors=6)
 #     print(dist)
 #     print(sugg)
@@ -46,12 +62,15 @@ def recommend_cosine(book_name):
 #     return arr
 
 
+# Details function which is responsible to fetch the details of the book using Google Book API
 def details(book_name):
+    # The below command returns an array containing ISBN numbers of a book
+    # Note that a single book can have multiple ISBN numbers because of different publishers etc.
     arr = book_isbn[book_isbn['Book-Title'] == book_name]['ISBN'].to_list()
     for i in arr:
         print(arr)
         isbn = i
-        api_key = 'AIzaSyB1dG09bREFsrUz0l3e6Su_SBrn6mVy4zw'
+        api_key = 'Your_API_KEY_Here'
         url = f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key={api_key}'
         response = requests.get(url)
         book = response.json()
@@ -60,7 +79,7 @@ def details(book_name):
             books = response.json()
             print(len(books))
             # Loop through the results and print book titles and authors
-            if books['totalItems']==0:
+            if books['totalItems']==0: # We're doing this incase there's no details in the API response
                 continue
             else:
                 for item in books['items']:
@@ -89,7 +108,6 @@ def app():
 
 st.title("Book Recommender System")
 
-
 st.header('Recommend Books', divider='rainbow')  
 
 option = st.selectbox("Type in your book", book_options,index=None,placeholder="Type Book...",)
@@ -99,19 +117,6 @@ st.write("You selected:", option)
 if st.button("Recommend"):
     book_array = []
     book_array = recommend_cosine(option)
-    
-    # r1 = st.columns(2)
-    # r2 = st.columns(2)
-    # r3 = st.columns(2)
-    # r4 = st.columns(2)
-    # r5 = st.columns(2)
-    
-    # count = 0
-    # for col in r1+r2+r3+r4+r5:
-    #     tile = col.container(height=300)
-    #     tile.write(book_array[count])
-    #     tile.image('https://books.google.com/books/content?id=I4ZyPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api')
-    #     count += 1
     
     tab_arr = ['Book '+str(i+1) for i in range(10)]
     st_arr = st.tabs(tab_arr)
@@ -128,64 +133,3 @@ if st.button("Recommend"):
                 st.image(detail_arr[4], width=200)
             else:
                 st.write("Failed to fetch data")
-        
-    # tab1, tab2, tab3, tab4, tab5 = st.tabs(["Book 1", "Book 2", "Book 3", "Book 4", "Book 5"])
-    # with tab1:
-    #     temp = book_array[0]
-    #     st.subheader(temp,divider=True)
-    #     detail_arr = details(temp)
-    #     if detail_arr:
-    #         st.write("Author: ",  " ".join(detail_arr[1]))
-    #         st.write("Categories: ",  " ".join(detail_arr[2]))  
-    #         st.write("Description: ",  detail_arr[3])  
-    #         st.image(detail_arr[4], width=200)
-    #     else:
-    #         st.write("Failed to fetch data")
-    
-    # with tab2:
-    #     temp = book_array[1]
-    #     st.subheader(temp,divider=True)
-    #     detail_arr = details(temp)
-    #     if detail_arr:
-    #         st.write("Author: ",  " ".join(detail_arr[1]))
-    #         st.write("Categories: ",  " ".join(detail_arr[2]))  
-    #         st.write("Description: ",  detail_arr[3])  
-    #         st.image(detail_arr[4], width=200) 
-    #     else:
-    #         st.write("Failed to fetch data")
-    
-    # with tab3:
-    #     temp = book_array[2]
-    #     st.subheader(temp,divider=True)
-    #     detail_arr = details(temp)
-    #     if detail_arr:
-    #         st.write("Author: ",  " ".join(detail_arr[1]))
-    #         st.write("Categories: ",  " ".join(detail_arr[2]))  
-    #         st.write("Description: ",  detail_arr[3])  
-    #         st.image(detail_arr[4], width=200)
-    #     else:
-    #         st.write("Failed to fetch data")
-            
-    # with tab4:
-    #     temp = book_array[3]
-    #     st.subheader(temp,divider=True)
-    #     detail_arr = details(temp)
-    #     if detail_arr:
-    #         st.write("Author: ",  " ".join(detail_arr[1]))
-    #         st.write("Categories: ",  " ".join(detail_arr[2]))  
-    #         st.write("Description: ",  detail_arr[3])  
-    #         st.image(detail_arr[4], width=200)
-    #     else:
-    #         st.write("Failed to fetch data")
-            
-    # with tab5:
-    #     temp = book_array[4]
-    #     st.subheader(temp,divider=True)
-    #     detail_arr = details(temp)
-    #     if detail_arr:
-    #         st.write("Author: ",  " ".join(detail_arr[1]))
-    #         st.write("Categories: ",  " ".join(detail_arr[2]))  
-    #         st.write("Description: ",  detail_arr[3])  
-    #         st.image(detail_arr[4], width=200)
-    #     else:
-    #         st.write("Failed to fetch data")
