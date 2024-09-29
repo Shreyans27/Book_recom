@@ -1,0 +1,9 @@
+firebase_admin
+streamlit
+streamlit_option_menu
+python-dotenv
+numpy
+pandas
+pickleshare
+requests
+bz2file
