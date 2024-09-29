@@ -6,11 +6,11 @@ import requests
 import bz2file as bz2
 
 
-df = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\book_top.csv',index_col=0)
+df = pd.read_csv('book_top.csv',index_col=0)
 book_options = sorted(df.index.unique())
 print(df.index)
 
-book_isbn_all = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\book_isbn_all.csv',index_col=0)
+book_isbn_all = pd.read_csv('book_isbn_all.csv',index_col=0)
 print(book_isbn_all.head)
 
 
