@@ -6,17 +6,17 @@ import requests
 import bz2file as bz2
 
 
-cosine = bz2.BZ2File('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\cosine.pbz2', 'rb')
+cosine = bz2.BZ2File('cosine.pbz2', 'rb')
 cosine = pickle.load(cosine)
 
-k_neighbor = bz2.BZ2File('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\k_neighbor.pbz2', 'rb')
+k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
 k_neighbor = pickle.load(k_neighbor)
 
-df = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\pivot.csv',index_col=0)
+df = pd.read_csv('pivot.csv',index_col=0)
 book_options = sorted(df.index.unique())
 print(df.index)
 
-book_isbn = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\book_isbn.csv',index_col=0)
+book_isbn = pd.read_csv('book_isbn.csv',index_col=0)
 print(book_isbn.head)
 
 
