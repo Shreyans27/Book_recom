@@ -1,3 +1,5 @@
+# Import required libraries
+
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -7,16 +9,20 @@ import bz2file as bz2
 import random
 
 
-book_isbn_all = pd.read_csv('book_isbn_all.csv',index_col=0)
+# Book_isbn_all is a dataframe which contains the book name and its unique ISBN number
+book_isbn_all = pd.read_csv('C:\\Users\\Admin\\Jupyter Notebooks\\Projects\\Book_recom\\pages\\book_isbn_all.csv',index_col=0)
 print(book_isbn_all.head)
 
 
+# Details function which is responsible to fetch the details of the book using Google Book API
 def details(book_name):
+    # The below command returns an array containing ISBN numbers of a book
+    # Note that a single book can have multiple ISBN numbers because of different publishers etc.
     arr = book_isbn_all[book_isbn_all['Book-Title'] == book_name]['ISBN'].to_list()
     for i in arr:
         print(arr)
         isbn = i
-        api_key = 'AIzaSyB1dG09bREFsrUz0l3e6Su_SBrn6mVy4zw'
+        api_key = 'Your_API_KEY_Here'
         url = f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key={api_key}'
         response = requests.get(url)
         book = response.json()
@@ -25,7 +31,7 @@ def details(book_name):
             books = response.json()
             print(len(books))
             # Loop through the results and print book titles and authors
-            if books['totalItems']==0:
+            if books['totalItems']==0: # We're doing this incase there's no details in the API response
                 continue
             else:
                 for item in books['items']:
@@ -51,7 +57,7 @@ st.set_page_config(
 
 st.title("Book Recommender System")
 
-st.header('Top Books by Rating', divider='rainbow')   
+st.header('Suggest Random Books', divider='rainbow')   
 
 if st.button("Suggest Random"):
     num = [random.randint(0,len(book_isbn_all)) for i in range(10)]
