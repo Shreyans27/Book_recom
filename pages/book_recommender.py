@@ -9,8 +9,8 @@ import bz2file as bz2
 cosine = bz2.BZ2File('cosine.pbz2', 'rb')
 cosine = pickle.load(cosine)
 
-k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
-k_neighbor = pickle.load(k_neighbor)
+# k_neighbor = bz2.BZ2File('k_neighbor.pbz2', 'rb')
+# k_neighbor = pickle.load(k_neighbor)
 
 df = pd.read_csv('pivot.csv',index_col=0)
 book_options = sorted(df.index.unique())
@@ -33,17 +33,17 @@ def recommend_cosine(book_name):
     return arr
 
 
-def recommend_k(book_name):
-    index=np.where(df.index==book_name)[0][0]
-    print(index)
-    dist, sugg = k_neighbor.kneighbors(df.iloc[index, :].values.reshape(1,-1),n_neighbors=6)
-    print(dist)
-    print(sugg)
-    arr = []
-    for i in range(len(sugg[0])):
-        print(df.index[sugg[0][i]])
-        arr.append(df.index[sugg[0][i]])
-    return arr
+# def recommend_k(book_name):
+#     index=np.where(df.index==book_name)[0][0]
+#     print(index)
+#     dist, sugg = k_neighbor.kneighbors(df.iloc[index, :].values.reshape(1,-1),n_neighbors=6)
+#     print(dist)
+#     print(sugg)
+#     arr = []
+#     for i in range(len(sugg[0])):
+#         print(df.index[sugg[0][i]])
+#         arr.append(df.index[sugg[0][i]])
+#     return arr
 
 
 def details(book_name):
