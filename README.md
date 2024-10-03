@@ -44,6 +44,9 @@ https://developers.google.com/books/docs/overview
 3. Type ```streamlit run 'c:\users\admin\jupyter notebooks\projects\book_recom\book_recommender_main.py'``` on the anaconda shell to host locally
 
 ### Outputs
+#### 1. Top Books Based on Rating
+**Note that we're getting top books based on rating using the weighted average formula and it has been explained in the jupyter notebook**
+![image](https://github.com/user-attachments/assets/8c100b73-896f-45c9-bcf1-5709d999e587)
 ![image](https://github.com/user-attachments/assets/dbc0fd69-7cbf-421e-81cf-67bda07203fd)
 ![image](https://github.com/user-attachments/assets/d0a92f2a-f28a-4823-8066-80bad06b1e5b)
 
