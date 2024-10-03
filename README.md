@@ -1,13 +1,11 @@
 # Book Recommendation System (Collaborative-Based Filtering)
 
 ### Using K-Neighbor and Cosine Similarity
-
 - Recommendation systems are taking over the world as so many websites and applications are using them as their fundamentals, some of which include famous companies like Amazon, Netflix, Youtube etc.
 - One approach for recommendations systems is collaboraive filtering, which is a method that predicts based on what other users will recommend. Therefore it is basically a user-based filtering.
 - For example lets say A and B both read a book and they both liked it. Now A also likes another book and will recommend it to B. This servers as the base of the technique.
 
 ### Machine Learning Model
-
 1. **K - Nearest Neighbors (KNN)** algorithm is a supervised machine learning method for regression and classification problems.
     - The K-NN algorithm works by finding the K nearest neighbors to a given data point based on a distance metric, such as Euclidean distance. The class or value of the data point is then determined by the majority vote or average of the K neighbors. This approach allows the algorithm to adapt to different patterns and make predictions based on the local structure of the data.
     - The value of k is very crucial in the KNN algorithm to define the number of neighbors in the algorithm. The value of k in the k-nearest neighbors (k-NN) algorithm should be chosen based on the input data.
@@ -46,5 +44,7 @@ https://developers.google.com/books/docs/overview
 3. Type ```streamlit run 'c:\users\admin\jupyter notebooks\projects\book_recom\book_recommender_main.py'``` on the anaconda shell to host locally
 
 ### Outputs
+![image](https://github.com/user-attachments/assets/dbc0fd69-7cbf-421e-81cf-67bda07203fd)
+![image](https://github.com/user-attachments/assets/d0a92f2a-f28a-4823-8066-80bad06b1e5b)
 
   
